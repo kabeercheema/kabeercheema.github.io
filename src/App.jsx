@@ -186,9 +186,13 @@ function Sidebar({ isDark, toggleTheme, menuOpen, setMenuOpen, year }) {
     const handleClick = (e) => {
       e.preventDefault();
       
+      // Get the base URL
+      const baseUrl = import.meta.env.BASE_URL || '/';
+      const currentPath = window.location.pathname;
+      
       // If we're on a project page, navigate to home first
-      if (window.location.pathname !== '/') {
-        window.location.href = '/';
+      if (currentPath !== baseUrl) {
+        window.location.href = baseUrl;
         // Wait a bit for navigation, then scroll to section
         setTimeout(() => {
           const targetId = href.replace('/#', '');
