@@ -2,6 +2,15 @@
 import { useEffect, useMemo, useState } from "react";
 import { Routes, Route, Link, useParams } from "react-router-dom";
 
+// ---- Utility function for asset paths ----
+const getAssetPath = (path) => {
+  // Get base URL from import.meta.env (Vite environment variable)
+  const base = import.meta.env.BASE_URL || '/';
+  // Remove leading slash from path and combine with base
+  const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+  return base + cleanPath;
+};
+
 // ---- Project data (unchanged content) ----
 const PROJECTS = [
   {
@@ -21,7 +30,7 @@ const PROJECTS = [
       "Deployment: runs on Linux (Raspberry Pi 4) under systemd with clean shutdown and auto-restart."
     ],
     links: { repo: "https://github.com/kabeercheema/RPLidarC1-ObjectDetection" },
-    hero: "/images/projects/lidar.gif",
+    hero: getAssetPath("images/projects/lidar.gif"),
   },
 
   {
@@ -39,7 +48,7 @@ const PROJECTS = [
       "Ops: shell automation for setup, logging, and service lifecycle; clean shutdown that turns outputs off and releases hardware."
     ],
     links: { repo: "https://github.com/kabeercheema" },
-    hero: "/images/projects/raspi.jpeg",
+    hero: getAssetPath("images/projects/raspi.jpeg"),
   },
 
   {
@@ -54,7 +63,7 @@ const PROJECTS = [
       "Assembled and bench-tested with load steps; documented bring-up procedure.",
     ],
     links: {},
-    hero: "/images/projects/buck.png",
+    hero: getAssetPath("images/projects/buck.png"),
   },
 
   {
@@ -250,7 +259,7 @@ function Sidebar({ isDark, toggleTheme, menuOpen, setMenuOpen, year }) {
         {/* Actions */}
         <div className="px-6 sm:px-8 pb-6 sm:pb-8">
           <a
-            href="/resume.pdf"
+            href={getAssetPath("resume.pdf")}
             className="w-full flex items-center justify-center gap-2 text-center rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white px-4 py-3 text-sm font-medium transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
           >
             <span>📄</span>
@@ -303,7 +312,7 @@ function Home({ projects, skills }) {
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
                 </span>
               </a>
-              <a href="/resume.pdf" className="rounded-2xl px-6 py-3 border border-white/30 dark:border-slate-600 hover:bg-white/20 dark:hover:bg-slate-800/50 text-sm font-medium transition-all duration-300 backdrop-blur-sm hover:scale-105">
+              <a href={getAssetPath("resume.pdf")} className="rounded-2xl px-6 py-3 border border-white/30 dark:border-slate-600 hover:bg-white/20 dark:hover:bg-slate-800/50 text-sm font-medium transition-all duration-300 backdrop-blur-sm hover:scale-105">
                 📄 Resume
               </a>
             </div>
