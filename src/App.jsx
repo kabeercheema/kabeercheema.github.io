@@ -274,7 +274,7 @@ function Sidebar({ isDark, toggleTheme, menuOpen, setMenuOpen, year }) {
 
       {/* Mobile quick actions */}
       <div className="lg:hidden mt-6 text-xs text-slate-500 dark:text-slate-400 text-center font-mono animate-fade-in">
-        © {year} • Made with ❤️
+
       </div>
     </aside>
   );
