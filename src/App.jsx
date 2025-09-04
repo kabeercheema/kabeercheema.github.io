@@ -185,6 +185,7 @@ function Sidebar({ isDark, toggleTheme, menuOpen, setMenuOpen, year }) {
   const NavLink = ({ label, href, delay = 0 }) => {
     const handleClick = (e) => {
       e.preventDefault();
+      e.stopPropagation();
       
       // Get the base URL
       const baseUrl = import.meta.env.BASE_URL || '/';
@@ -211,11 +212,25 @@ function Sidebar({ isDark, toggleTheme, menuOpen, setMenuOpen, year }) {
       }
     };
 
+    const handleTouchStart = (e) => {
+      // Prevent default to avoid conflicts with hover states on mobile
+      e.currentTarget.style.backgroundColor = 'rgba(99, 102, 241, 0.1)';
+    };
+
+    const handleTouchEnd = (e) => {
+      setTimeout(() => {
+        e.currentTarget.style.backgroundColor = '';
+      }, 150);
+    };
+
     return (
       <a
         href={href}
         onClick={handleClick}
-        className="group flex items-center justify-between py-3 px-4 rounded-2xl hover:bg-gradient-to-r hover:from-indigo-500/10 hover:to-purple-500/10 dark:hover:from-indigo-400/10 dark:hover:to-purple-400/10 transition-colors duration-200"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        className="group flex items-center justify-between py-3 px-4 rounded-2xl hover:bg-gradient-to-r hover:from-indigo-500/10 hover:to-purple-500/10 dark:hover:from-indigo-400/10 dark:hover:to-purple-400/10 transition-colors duration-200 cursor-pointer select-none"
+        style={{ WebkitTapHighlightColor: 'transparent' }}
       >
         <span className="text-sm font-medium">{label}</span>
         <span className="opacity-60 group-hover:opacity-100 transition-opacity duration-200">
@@ -264,7 +279,9 @@ function Sidebar({ isDark, toggleTheme, menuOpen, setMenuOpen, year }) {
         <div className="px-6 sm:px-8 pb-6 sm:pb-8">
           <a
             href={getAssetPath("resume.pdf")}
-            className="w-full flex items-center justify-center gap-2 text-center rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white px-4 py-3 text-sm font-medium transition-colors duration-200"
+            className="w-full flex items-center justify-center gap-2 text-center rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 active:from-indigo-500 active:to-purple-500 text-white px-4 py-3 text-sm font-medium transition-colors duration-200"
+            onTouchStart={(e) => e.currentTarget.style.transform = 'scale(0.98)'}
+            onTouchEnd={(e) => e.currentTarget.style.transform = 'scale(1)'}
           >
             <span>📄</span>
             <span>Download Resume</span>
@@ -310,13 +327,21 @@ function Home({ projects, skills }) {
               </p>
             </div>
             <div className="mt-8 flex flex-wrap gap-4 animate-slide-up" style={{ animationDelay: '600ms' }}>
-              <a href="mailto:ks4cheem@uwaterloo.ca" className="group rounded-2xl px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-500 hover:to-purple-500 active:scale-95 text-sm font-medium transition-all duration-300 shadow-lg hover:shadow-xl">
+              <a 
+                href="mailto:ks4cheem@uwaterloo.ca" 
+                className="group rounded-2xl px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-500 hover:to-purple-500 text-sm font-medium transition-colors duration-200 shadow-lg cursor-pointer select-none"
+                style={{ WebkitTapHighlightColor: 'transparent' }}
+              >
                 <span className="flex items-center gap-2">
                   💬 <span>Email Me</span>
-                  <span className="group-hover:translate-x-1 transition-transform">→</span>
+                  <span>→</span>
                 </span>
               </a>
-              <a href={getAssetPath("resume.pdf")} className="rounded-2xl px-6 py-3 border border-white/30 dark:border-slate-600 hover:bg-white/20 dark:hover:bg-slate-800/50 text-sm font-medium transition-all duration-300 backdrop-blur-sm hover:scale-105">
+              <a 
+                href={getAssetPath("resume.pdf")} 
+                className="rounded-2xl px-6 py-3 border border-white/30 dark:border-slate-600 hover:bg-white/20 dark:hover:bg-slate-800/50 text-sm font-medium transition-colors duration-200 backdrop-blur-sm cursor-pointer select-none"
+                style={{ WebkitTapHighlightColor: 'transparent' }}
+              >
                 📄 Resume
               </a>
             </div>
@@ -366,7 +391,16 @@ function Home({ projects, skills }) {
                 <div className="mt-6">
                   <Link
                     to={`/projects/${p.slug}`}
-                    className="inline-flex items-center gap-2 text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-purple-600 dark:hover:text-purple-400 transition-all duration-300 group-hover:translate-x-1"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-200 cursor-pointer select-none"
+                    style={{ WebkitTapHighlightColor: 'transparent' }}
+                    onTouchStart={(e) => {
+                      e.currentTarget.style.color = 'rgb(147, 51, 234)';
+                    }}
+                    onTouchEnd={(e) => {
+                      setTimeout(() => {
+                        e.currentTarget.style.color = '';
+                      }, 150);
+                    }}
                   >
                     <span>Explore Details</span>
                     <ArrowIcon />
@@ -447,15 +481,30 @@ function Home({ projects, skills }) {
               </p>
             </div>
             <div className="flex flex-wrap gap-4">
-              <a href="mailto:ks4cheem@uwaterloo.ca" className="flex-1 min-w-[120px] flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-4 font-medium hover:from-indigo-500 hover:to-purple-500 transition-all duration-300 hover:scale-105 shadow-lg">
+              <a 
+                href="mailto:ks4cheem@uwaterloo.ca" 
+                className="flex-1 min-w-[120px] flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-4 font-medium active:from-indigo-500 active:to-purple-500 transition-colors duration-200 shadow-lg"
+                onTouchStart={(e) => e.currentTarget.style.transform = 'scale(0.98)'}
+                onTouchEnd={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              >
                 <span>📧</span>
                 <span>Email</span>
               </a>
-              <a href="https://www.linkedin.com/in/kabeer-cheema-b32238288/" className="flex-1 min-w-[120px] flex items-center justify-center gap-2 rounded-2xl border border-white/30 dark:border-slate-600 hover:bg-white/20 dark:hover:bg-slate-800/50 px-6 py-4 font-medium transition-all duration-300 backdrop-blur-sm hover:scale-105">
+              <a 
+                href="https://www.linkedin.com/in/kabeer-cheema-b32238288/" 
+                className="flex-1 min-w-[120px] flex items-center justify-center gap-2 rounded-2xl border border-white/30 dark:border-slate-600 active:bg-white/20 dark:active:bg-slate-800/50 px-6 py-4 font-medium transition-colors duration-200 backdrop-blur-sm"
+                onTouchStart={(e) => e.currentTarget.style.transform = 'scale(0.98)'}
+                onTouchEnd={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              >
                 <span>💼</span>
                 <span>LinkedIn</span>
               </a>
-              <a href="https://github.com/kabeercheema" className="flex-1 min-w-[120px] flex items-center justify-center gap-2 rounded-2xl border border-white/30 dark:border-slate-600 hover:bg-white/20 dark:hover:bg-slate-800/50 px-6 py-4 font-medium transition-all duration-300 backdrop-blur-sm hover:scale-105">
+              <a 
+                href="https://github.com/kabeercheema" 
+                className="flex-1 min-w-[120px] flex items-center justify-center gap-2 rounded-2xl border border-white/30 dark:border-slate-600 active:bg-white/20 dark:active:bg-slate-800/50 px-6 py-4 font-medium transition-colors duration-200 backdrop-blur-sm"
+                onTouchStart={(e) => e.currentTarget.style.transform = 'scale(0.98)'}
+                onTouchEnd={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              >
                 <span>🐙</span>
                 <span>GitHub</span>
               </a>
