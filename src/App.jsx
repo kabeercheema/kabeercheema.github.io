@@ -47,7 +47,7 @@ const PROJECTS = [
       "Reliability: non-blocking I/O, send retries on transient errors, and service-oriented startup for repeatable boots.",
       "Ops: shell automation for setup, logging, and service lifecycle; clean shutdown that turns outputs off and releases hardware."
     ],
-    links: { repo: "https://github.com/kabeercheema" },
+    links: { repo: "https://github.com/kabeercheema/LightsNSwitches" },
     hero: getAssetPath("images/projects/raspi.jpeg"),
   },
 
@@ -215,10 +215,10 @@ function Sidebar({ isDark, toggleTheme, menuOpen, setMenuOpen, year }) {
       <a
         href={href}
         onClick={handleClick}
-        className="group flex items-center justify-between py-3 px-4 rounded-2xl hover:bg-gradient-to-r hover:from-indigo-500/10 hover:to-purple-500/10 dark:hover:from-indigo-400/10 dark:hover:to-purple-400/10 transition-all duration-300 transform hover:scale-105"
+        className="group flex items-center justify-between py-3 px-4 rounded-2xl hover:bg-gradient-to-r hover:from-indigo-500/10 hover:to-purple-500/10 dark:hover:from-indigo-400/10 dark:hover:to-purple-400/10 transition-colors duration-200"
       >
         <span className="text-sm font-medium">{label}</span>
-        <span className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-1">
+        <span className="opacity-60 group-hover:opacity-100 transition-opacity duration-200">
           <ArrowIcon />
         </span>
       </a>
@@ -228,7 +228,7 @@ function Sidebar({ isDark, toggleTheme, menuOpen, setMenuOpen, year }) {
   return (
     <aside className="lg:sticky lg:top-10 self-start">
       {/* Card */}
-      <div className="rounded-3xl border border-white/20 dark:border-slate-700/50 bg-white/60 dark:bg-slate-900/40 backdrop-blur-xl shadow-2xl overflow-hidden hover:shadow-3xl transition-all duration-500 hover:scale-105">
+      <div className="rounded-3xl border border-white/20 dark:border-slate-700/50 bg-white/60 dark:bg-slate-900/40 backdrop-blur-xl shadow-2xl overflow-hidden hover:shadow-3xl transition-shadow duration-300">
         {/* Header */}
         <div className="p-6 sm:p-8 border-b border-white/20 dark:border-slate-700/50 bg-gradient-to-r from-indigo-500/5 to-purple-500/5">
           <div className="flex items-center justify-between">
@@ -243,7 +243,7 @@ function Sidebar({ isDark, toggleTheme, menuOpen, setMenuOpen, year }) {
             <button
               onClick={toggleTheme}
               aria-label="Toggle dark mode"
-              className="rounded-2xl border border-white/30 dark:border-slate-600 p-3 hover:bg-gradient-to-r hover:from-indigo-500/10 hover:to-purple-500/10 transition-all duration-300 transform hover:scale-110 hover:rotate-12"
+              className="rounded-2xl border border-white/30 dark:border-slate-600 p-3 hover:bg-gradient-to-r hover:from-indigo-500/10 hover:to-purple-500/10 transition-colors duration-200"
             >
               {isDark ? <MoonIcon /> : <SunIcon />}
             </button>
@@ -264,7 +264,7 @@ function Sidebar({ isDark, toggleTheme, menuOpen, setMenuOpen, year }) {
         <div className="px-6 sm:px-8 pb-6 sm:pb-8">
           <a
             href={getAssetPath("resume.pdf")}
-            className="w-full flex items-center justify-center gap-2 text-center rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white px-4 py-3 text-sm font-medium transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+            className="w-full flex items-center justify-center gap-2 text-center rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white px-4 py-3 text-sm font-medium transition-colors duration-200"
           >
             <span>📄</span>
             <span>Download Resume</span>
