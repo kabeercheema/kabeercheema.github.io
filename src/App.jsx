@@ -244,25 +244,44 @@ function Sidebar({ isDark, toggleTheme, menuOpen, setMenuOpen, year }) {
     <aside className="lg:sticky lg:top-10 self-start">
       {/* Card */}
       <div className="rounded-3xl border border-white/20 dark:border-slate-700/50 bg-white/60 dark:bg-slate-900/40 backdrop-blur-xl shadow-2xl overflow-hidden hover:shadow-3xl transition-shadow duration-300">
-        {/* Header */}
-        <div className="p-6 sm:p-8 border-b border-white/20 dark:border-slate-700/50 bg-gradient-to-r from-indigo-500/5 to-purple-500/5">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-xl font-bold tracking-tight bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
-                Kabeer Cheema
-              </h1>
-              <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 font-mono">
-                &lt; Embedded &amp; Robotics Engineer /&gt;
-              </p>
+        
+        {/* Hero Photo Section */}
+        <div className="relative">
+          <div className="h-80 bg-gradient-to-br from-indigo-500/20 via-purple-500/20 to-pink-500/20 flex items-center justify-center">
+            <div className="relative">
+              {/* Animated gradient border */}
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-1 animate-pulse">
+                <div className="w-full h-full rounded-full bg-white/90 dark:bg-slate-900/90"></div>
+              </div>
+              {/* Hero image - MUCH BIGGER! */}
+              <img
+                src={getAssetPath("hero.jpg")}
+                alt="Kabeer Cheema"
+                className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 rounded-full object-cover shadow-2xl border-4 border-white/50 dark:border-slate-800/50"
+              />
+              {/* Glow effect */}
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500/30 via-purple-500/30 to-pink-500/30 blur-xl -z-10"></div>
             </div>
-            <button
-              onClick={toggleTheme}
-              aria-label="Toggle dark mode"
-              className="rounded-2xl border border-white/30 dark:border-slate-600 p-3 hover:bg-gradient-to-r hover:from-indigo-500/10 hover:to-purple-500/10 transition-colors duration-200"
-            >
-              {isDark ? <MoonIcon /> : <SunIcon />}
-            </button>
           </div>
+          
+          {/* Theme toggle button - positioned absolutely */}
+          <button
+            onClick={toggleTheme}
+            aria-label="Toggle dark mode"
+            className="absolute top-4 right-4 rounded-2xl border border-white/30 dark:border-slate-600 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-3 hover:bg-gradient-to-r hover:from-indigo-500/10 hover:to-purple-500/10 transition-colors duration-200"
+          >
+            {isDark ? <MoonIcon /> : <SunIcon />}
+          </button>
+        </div>
+
+        {/* Header */}
+        <div className="p-6 sm:p-8 border-b border-white/20 dark:border-slate-700/50 text-center">
+          <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
+            Kabeer Cheema
+          </h1>
+          <p className="text-sm text-slate-600 dark:text-slate-400 mt-2 font-mono">
+            &lt; Embedded &amp; Robotics Engineer /&gt;
+          </p>
         </div>
 
         {/* Nav */}
