@@ -10,7 +10,7 @@
   }
 
   ::selection {
-    @apply bg-emerald-500/20 text-emerald-900 dark:text-emerald-100;
+    @apply bg-cyan-500/20 text-slate-900 dark:text-cyan-100;
   }
 }
 

@@ -1,18 +1,12 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Routes, Route, Link, useParams, useNavigate } from "react-router-dom";
 
-/* ═══════════════════════════════════════════════════════════════
-   UTILITIES
-   ═══════════════════════════════════════════════════════════════ */
 const getAssetPath = (path) => {
   const base = import.meta.env.BASE_URL || "/";
   const clean = path.startsWith("/") ? path.slice(1) : path;
   return base + clean;
 };
 
-/* ═══════════════════════════════════════════════════════════════
-   DATA
-   ═══════════════════════════════════════════════════════════════ */
 const PROJECTS = [
   {
     slug: "lidar-supervisory-detector",
@@ -21,8 +15,8 @@ const PROJECTS = [
     tags: ["RTMaps", "Python", "C++", "scikit-learn", "NumPy", "OpenCV", "Real-time"],
     details: [
       "Stack: RTMaps graph; C++ RPLidar driver (UART/TCP); Python processing nodes; OpenCV UI.",
-      "Flow: LiDAR frames → preprocessing → feature vectorization → clustering/classification → per-object confidence.",
-      "Preprocessing: polar→Cartesian, range/quality gating, angular downsampling, ROI masks, light temporal smoothing.",
+      "Flow: LiDAR frames -> preprocessing -> feature vectorization -> clustering/classification -> per-object confidence.",
+      "Preprocessing: polar->Cartesian, range/quality gating, angular downsampling, ROI masks, light temporal smoothing.",
       "Features: segment span, point density, local curvature, and short-window motion cues.",
       "Decisioning: accept/flag/veto OEM proposals with tunable thresholds; JSON topics for downstream consumers.",
       "Tooling: YAML configs for extrinsics, ROIs, thresholds; CLI switch for live vs log replay.",
@@ -77,7 +71,7 @@ const PROJECTS = [
   {
     slug: "rc-f1-firmware",
     title: "RC F1 Car Firmware",
-    desc: "Embedded C++ (Arduino) non-blocking control loop; receiver decode → ESC/servo PWM with calibration, deadbands, smoothing; safety modes and diagnostics.",
+    desc: "Embedded C++ (Arduino) non-blocking control loop; receiver decode -> ESC/servo PWM with calibration, deadbands, smoothing; safety modes and diagnostics.",
     tags: ["Embedded C++", "Arduino", "PWM", "Control"],
     details: [
       "Non-blocking loop with timer interrupts; safety modes for arm/disarm/fault.",
@@ -93,7 +87,7 @@ const EXPERIENCE = [
   {
     role: "Connected & Autonomous Vehicles Lead",
     company: "UWaterloo EcoCAR",
-    period: "May 2025 – Present",
+    period: "May 2025 - Present",
     bullets: [
       "Deployed a Raspberry Pi 4 CAN gateway on Linux with Bash automation and Python multithreading for low-latency, real-time control; validated via HIL.",
       "Built a 2D LiDAR supervisory detector in RTMaps + Python with C++ UART/TCP I/O; used scikit-learn + NumPy with OpenCV visualization.",
@@ -103,7 +97,7 @@ const EXPERIENCE = [
   {
     role: "Software QA Engineer",
     company: "i4i",
-    period: "Jan 2024 – Dec 2024",
+    period: "Jan 2024 - Dec 2024",
     bullets: [
       "Built a Python/XSLT tool to convert Excel metadata into Word, increasing team productivity by ~90%.",
       "Led functional, regression, and performance test cycles; coordinated QA contributors across releases.",
@@ -125,7 +119,7 @@ const HERO_PHRASES = [
   "robotics perception pipelines",
   "sensor fusion algorithms",
   "reliable automotive firmware",
-  "hardware–software integrations",
+  "hardware-software integrations",
 ];
 
 const NAV_ITEMS = [
@@ -135,17 +129,24 @@ const NAV_ITEMS = [
   { id: "skills", label: "Skills" },
   { id: "contact", label: "Contact" },
 ];
+const NAV_SECTION_IDS = NAV_ITEMS.map((item) => item.id);
 
-/* ═══════════════════════════════════════════════════════════════
-   HOOKS
-   ═══════════════════════════════════════════════════════════════ */
-function useInView(options = {}) {
+const HERO_METRICS = [
+  { value: "+85%", label: "Tracking accuracy uplift" },
+  { value: "Linux + CAN", label: "Production-style systems" },
+  { value: "HIL", label: "Validation workflow" },
+];
+
+const CONTAINER = "mx-auto max-w-6xl px-5 sm:px-8";
+
+function useInView(options) {
   const ref = useRef(null);
   const [isInView, setIsInView] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -155,9 +156,10 @@ function useInView(options = {}) {
       },
       { threshold: 0.15, rootMargin: "0px 0px -60px 0px", ...options }
     );
+
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [options]);
 
   return [ref, isInView];
 }
@@ -186,6 +188,7 @@ function useTypingEffect(phrases, speed = 80, delSpeed = 40, pause = 2000) {
       },
       deleting ? delSpeed : speed
     );
+
     return () => clearTimeout(timer);
   }, [text, deleting, idx, phrases, speed, delSpeed, pause]);
 
@@ -194,44 +197,51 @@ function useTypingEffect(phrases, speed = 80, delSpeed = 40, pause = 2000) {
 
 function useScrollY() {
   const [y, setY] = useState(0);
+
   useEffect(() => {
     const h = () => setY(window.scrollY);
     window.addEventListener("scroll", h, { passive: true });
     return () => window.removeEventListener("scroll", h);
   }, []);
+
   return y;
 }
 
 function useActiveSection(ids) {
   const [active, setActive] = useState("");
+
   useEffect(() => {
     const observers = ids.map((id) => {
       const el = document.getElementById(id);
       if (!el) return null;
+
       const obs = new IntersectionObserver(
-        ([entry]) => { if (entry.isIntersecting) setActive(id); },
+        ([entry]) => {
+          if (entry.isIntersecting) setActive(id);
+        },
         { threshold: 0.2, rootMargin: "-80px 0px -40% 0px" }
       );
+
       obs.observe(el);
       return obs;
     });
+
     return () => observers.forEach((o) => o?.disconnect());
-  }, []);
+  }, [ids]);
+
   return active;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   REVEAL WRAPPER
-   ═══════════════════════════════════════════════════════════════ */
 function Reveal({ children, className = "", delay = 0, direction = "up" }) {
   const [ref, inView] = useInView();
   const transforms = {
-    up: "translate-y-8",
-    down: "-translate-y-8",
-    left: "translate-x-8",
-    right: "-translate-x-8",
+    up: "translate-y-6",
+    down: "-translate-y-6",
+    left: "translate-x-6",
+    right: "-translate-x-6",
     none: "",
   };
+
   return (
     <div
       ref={ref}
@@ -245,24 +255,27 @@ function Reveal({ children, className = "", delay = 0, direction = "up" }) {
   );
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   APP
-   ═══════════════════════════════════════════════════════════════ */
 export default function App() {
   const [isDark, setIsDark] = useState(() => {
     try {
       const s = localStorage.getItem("theme");
       return s ? s === "dark" : true;
-    } catch { return true; }
+    } catch {
+      return true;
+    }
   });
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDark);
-    try { localStorage.setItem("theme", isDark ? "dark" : "light"); } catch {}
+    try {
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    } catch {
+      // no-op: storage can be unavailable in private contexts
+    }
   }, [isDark]);
 
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-800 dark:text-neutral-100 transition-colors duration-300 overflow-x-hidden">
+    <div className="min-h-screen overflow-x-hidden bg-slate-50 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
       <Navbar isDark={isDark} toggleTheme={() => setIsDark((d) => !d)} />
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -273,15 +286,12 @@ export default function App() {
   );
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   NAVBAR
-   ═══════════════════════════════════════════════════════════════ */
 function Navbar({ isDark, toggleTheme }) {
   const scrollY = useScrollY();
-  const active = useActiveSection(NAV_ITEMS.map((n) => n.id));
+  const active = useActiveSection(NAV_SECTION_IDS);
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
-  const scrolled = scrollY > 40;
+  const scrolled = scrollY > 28;
 
   const goToSection = useCallback(
     (id) => {
@@ -296,8 +306,9 @@ function Navbar({ isDark, toggleTheme }) {
         navigate("/");
         setTimeout(() => {
           document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-        }, 150);
+        }, 140);
       }
+
       setMenuOpen(false);
     },
     [navigate]
@@ -306,31 +317,32 @@ function Navbar({ isDark, toggleTheme }) {
   return (
     <>
       <header
-        className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-white/80 dark:bg-neutral-950/80 backdrop-blur-xl border-b border-neutral-200 dark:border-neutral-800 shadow-sm"
+            ? "border-b border-slate-200/90 bg-slate-50/88 shadow-sm backdrop-blur-xl dark:border-slate-800/90 dark:bg-slate-950/88"
             : "bg-transparent"
         }`}
       >
-        <nav className="mx-auto max-w-6xl flex items-center justify-between px-5 sm:px-8 h-16">
-          {/* Logo */}
+        <nav className={`${CONTAINER} flex h-16 items-center justify-between`}>
           <button
-            onClick={() => { navigate("/"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-            className="font-display font-bold text-lg tracking-tight hover:opacity-80 transition-opacity"
+            onClick={() => {
+              navigate("/");
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            className="rounded-md px-1 py-0.5 font-display text-lg font-bold tracking-tight text-slate-900 transition-opacity hover:opacity-80 dark:text-slate-100"
           >
-            kabeer<span className="text-emerald-500">.</span>
+            kabeer<span className="text-cyan-500">.</span>
           </button>
 
-          {/* Desktop Nav */}
-          <ul className="hidden md:flex items-center gap-1">
+          <ul className="hidden items-center gap-1.5 md:flex">
             {NAV_ITEMS.map((item) => (
               <li key={item.id}>
                 <button
                   onClick={() => goToSection(item.id)}
-                  className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
+                  className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
                     active === item.id
-                      ? "text-emerald-600 dark:text-emerald-400 bg-emerald-500/10"
-                      : "text-neutral-500 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800/50"
+                      ? "bg-cyan-500/12 text-cyan-700 dark:text-cyan-300"
+                      : "text-slate-500 hover:bg-slate-100 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-800/70 dark:hover:text-slate-200"
                   }`}
                 >
                   {item.label}
@@ -339,27 +351,25 @@ function Navbar({ isDark, toggleTheme }) {
             ))}
           </ul>
 
-          {/* Right actions */}
           <div className="flex items-center gap-2">
             <button
               onClick={toggleTheme}
               aria-label="Toggle theme"
-              className="p-2.5 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+              className="rounded-lg border border-transparent p-2 text-slate-500 transition-colors hover:border-slate-200 hover:bg-slate-100 hover:text-slate-800 dark:text-slate-400 dark:hover:border-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-200"
             >
               {isDark ? <SunIcon /> : <MoonIcon />}
             </button>
             <a
               href={getAssetPath("resume.pdf")}
-              className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-emerald-500/40 text-emerald-600 dark:text-emerald-400 text-sm font-medium hover:bg-emerald-500/10 transition-colors"
+              className="hidden items-center gap-1.5 rounded-lg border border-cyan-500/40 px-3.5 py-1.5 text-sm font-medium text-cyan-700 transition-colors hover:bg-cyan-500/10 dark:text-cyan-300 sm:inline-flex"
             >
               <DownloadIcon />
               Resume
             </a>
-            {/* Hamburger */}
             <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="md:hidden p-2.5 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+              onClick={() => setMenuOpen((v) => !v)}
               aria-label="Menu"
+              className="rounded-lg p-2 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200 md:hidden"
             >
               {menuOpen ? <XIcon /> : <MenuIcon />}
             </button>
@@ -367,22 +377,21 @@ function Navbar({ isDark, toggleTheme }) {
         </nav>
       </header>
 
-      {/* Mobile menu overlay */}
       {menuOpen && (
-        <div className="fixed inset-0 z-40 bg-white/95 dark:bg-neutral-950/95 backdrop-blur-xl md:hidden">
-          <nav className="flex flex-col items-center justify-center h-full gap-2">
+        <div className="fixed inset-0 z-40 bg-slate-50/95 backdrop-blur-xl dark:bg-slate-950/95 md:hidden">
+          <nav className="flex h-full flex-col items-center justify-center gap-2">
             {NAV_ITEMS.map((item) => (
               <button
                 key={item.id}
                 onClick={() => goToSection(item.id)}
-                className="text-2xl font-display font-semibold py-3 px-8 rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+                className="rounded-xl px-8 py-3 text-2xl font-display font-semibold tracking-tight text-slate-900 transition-colors hover:bg-slate-100 dark:text-slate-100 dark:hover:bg-slate-800"
               >
                 {item.label}
               </button>
             ))}
             <a
               href={getAssetPath("resume.pdf")}
-              className="mt-6 inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-emerald-500 text-neutral-950 font-semibold text-lg hover:bg-emerald-400 transition-colors"
+              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-cyan-500 px-6 py-3 text-lg font-semibold text-slate-950 transition-colors hover:bg-cyan-400"
             >
               <DownloadIcon /> Resume
             </a>
@@ -393,373 +402,229 @@ function Navbar({ isDark, toggleTheme }) {
   );
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   HOME PAGE
-   ═══════════════════════════════════════════════════════════════ */
 function HomePage() {
   return (
     <>
       <Hero />
-      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+      <main className={`${CONTAINER} pb-24`}>
         <ProjectsSection />
         <ExperienceSection />
         <SkillsSection />
         <ContactSection />
-      </div>
+      </main>
     </>
   );
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   HERO
-   ═══════════════════════════════════════════════════════════════ */
 function Hero() {
   const typed = useTypingEffect(HERO_PHRASES, 70, 35, 2200);
 
   return (
-    <section id="about" className="relative min-h-screen flex items-center scroll-mt-20">
-      {/* Background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-emerald-500/15 dark:bg-emerald-500/10 rounded-full blur-[140px]" />
-        <div className="absolute top-1/2 -left-60 w-[600px] h-[600px] bg-blue-500/10 dark:bg-blue-500/5 rounded-full blur-[140px]" />
-        <div className="absolute -bottom-40 right-1/4 w-[400px] h-[400px] bg-purple-500/10 dark:bg-purple-500/5 rounded-full blur-[120px]" />
-        <div className="absolute inset-0 grid-pattern opacity-100" />
+    <section id="about" className="relative scroll-mt-20 border-b border-slate-200/80 pt-28 pb-20 dark:border-slate-800/80 md:pt-36 md:pb-24">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 grid-pattern" />
       </div>
 
-      <div className="relative mx-auto max-w-6xl w-full px-5 sm:px-8 pt-28 pb-20">
-        <Reveal>
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-xs sm:text-sm font-mono mb-8">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-            </span>
-            Open to Opportunities
+      <div className={`${CONTAINER} relative`}>
+        <div className="grid gap-10 lg:grid-cols-[1fr_340px] lg:items-end">
+          <div>
+            <Reveal>
+              <p className="mb-3 font-mono text-xs uppercase tracking-[0.16em] text-cyan-600 dark:text-cyan-400">
+                Mechatronics Engineering Portfolio
+              </p>
+            </Reveal>
+
+            <Reveal delay={60}>
+              <h1 className="text-4xl font-display font-bold tracking-tight text-slate-900 dark:text-slate-50 sm:text-5xl md:text-6xl">
+                Embedded, Robotics, and Real-Time Systems Engineering.
+              </h1>
+            </Reveal>
+
+            <Reveal delay={120}>
+              <p className="mt-5 max-w-3xl text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg">
+                I am Kabeer Cheema, a Mechatronics Engineering student at the University of Waterloo focused on
+                building dependable hardware-software systems for autonomous and embedded applications.
+              </p>
+            </Reveal>
+
+            <Reveal delay={180}>
+              <p className="mt-6 font-mono text-sm text-slate-500 dark:text-slate-400">
+                Current focus: <span className="font-semibold text-cyan-700 dark:text-cyan-300">{typed}</span>
+                <span className="ml-0.5 inline-block h-4 w-0.5 animate-typing-cursor bg-cyan-500 align-middle" />
+              </p>
+            </Reveal>
+
+            <Reveal delay={250}>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <CTAButton onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}>
+                  View Projects
+                </CTAButton>
+                <CTAButton href={getAssetPath("resume.pdf")} variant="secondary" icon={<DownloadIcon />}>
+                  Download Resume
+                </CTAButton>
+              </div>
+            </Reveal>
           </div>
-        </Reveal>
 
-        <Reveal delay={100}>
-          <p className="font-mono text-sm text-neutral-500 dark:text-neutral-500 mb-3">
-            Hi, my name is
-          </p>
-        </Reveal>
-
-        <Reveal delay={200}>
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold tracking-tight leading-[0.95]">
-            Kabeer
-            <br />
-            <span className="bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-400 dark:from-emerald-400 dark:via-emerald-300 dark:to-teal-300 bg-clip-text text-transparent">
-              Cheema
-            </span>
-          </h1>
-        </Reveal>
-
-        <Reveal delay={350}>
-          <div className="mt-6 sm:mt-8 h-8 sm:h-10">
-            <p className="text-lg sm:text-xl md:text-2xl font-mono text-neutral-600 dark:text-neutral-400">
-              I build{" "}
-              <span className="text-emerald-600 dark:text-emerald-400 font-semibold">
-                {typed}
-              </span>
-              <span className="inline-block w-0.5 h-5 sm:h-6 bg-emerald-500 ml-0.5 align-middle animate-typing-cursor" />
-            </p>
-          </div>
-        </Reveal>
-
-        <Reveal delay={500}>
-          <p className="mt-8 max-w-2xl text-base sm:text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed">
-            Aspiring{" "}
-            <span className="text-neutral-800 dark:text-neutral-200 font-medium">
-              embedded &amp; robotics engineer
-            </span>{" "}
-            studying Mechatronics Engineering at the University of Waterloo. Passionate about real-time
-            systems, sensor fusion, and reliable hardware–software integration — from firmware to
-            deployment on Linux &amp; microcontrollers.
-          </p>
-        </Reveal>
-
-        <Reveal delay={650}>
-          <div className="mt-10 flex flex-wrap gap-4">
-            <button
-              onClick={() =>
-                document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })
-              }
-              className="group inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-neutral-950 font-semibold text-sm transition-all duration-200 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30"
-            >
-              View My Work
-              <svg className="w-4 h-4 transition-transform group-hover:translate-y-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-              </svg>
-            </button>
-            <a
-              href={getAssetPath("resume.pdf")}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-neutral-300 dark:border-neutral-700 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 text-sm font-medium transition-colors duration-200 hover:text-emerald-600 dark:hover:text-emerald-400"
-            >
-              <DownloadIcon />
-              Download Resume
-            </a>
-          </div>
-        </Reveal>
-
-        {/* Scroll indicator */}
-        <Reveal delay={900} className="absolute bottom-10 left-1/2 -translate-x-1/2">
-          <div className="flex flex-col items-center gap-2 text-neutral-400 dark:text-neutral-600">
-            <span className="text-xs font-mono tracking-widest uppercase">Scroll</span>
-            <div className="w-5 h-8 rounded-full border-2 border-neutral-300 dark:border-neutral-700 flex justify-center pt-1.5">
-              <div className="w-1 h-1.5 rounded-full bg-neutral-400 dark:bg-neutral-600 animate-bounce" />
+          <Reveal delay={260}>
+            <div className="rounded-2xl border border-slate-200/90 bg-white/90 p-6 shadow-sm shadow-slate-200/60 dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-black/20">
+              <p className="mb-5 font-mono text-[11px] uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+                Engineering Highlights
+              </p>
+              <div className="space-y-4">
+                {HERO_METRICS.map((item) => (
+                  <div key={item.label} className="border-l-2 border-cyan-500/60 pl-3">
+                    <p className="text-xl font-display font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+                      {item.value}
+                    </p>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">{item.label}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        </Reveal>
+          </Reveal>
+        </div>
       </div>
     </section>
   );
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   PROJECTS
-   ═══════════════════════════════════════════════════════════════ */
 function ProjectsSection() {
   return (
-    <section id="projects" className="py-20 md:py-28 scroll-mt-20">
+    <section id="projects" className="scroll-mt-20 py-16 md:py-20">
       <Reveal>
-        <SectionLabel number="01" label="PROJECTS" />
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
-          <h2 className="text-3xl md:text-4xl font-display font-bold">
-            Featured Projects
-          </h2>
-          <a
-            href="https://github.com/kabeercheema"
-            target="_blank"
-            rel="noreferrer"
-            className="group inline-flex items-center gap-1.5 text-sm font-mono text-neutral-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
-          >
-            View GitHub
-            <svg className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H9M17 7v8" />
-            </svg>
-          </a>
-        </div>
-      </Reveal>
-
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {PROJECTS.map((p, i) => (
-          <Reveal key={p.slug} delay={i * 80}>
-            <ProjectCard project={p} index={i} />
-          </Reveal>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function ProjectCard({ project, index }) {
-  return (
-    <Link
-      to={`/projects/${project.slug}`}
-      className="group flex flex-col rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900/60 hover:border-emerald-500/40 dark:hover:border-emerald-500/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-500/5 overflow-hidden h-full"
-    >
-      {/* Image */}
-      <div className="relative aspect-video overflow-hidden bg-neutral-100 dark:bg-neutral-800">
-        {project.hero ? (
-          <img
-            src={project.hero}
-            alt={project.title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-neutral-100 to-neutral-200 dark:from-neutral-800 dark:to-neutral-900">
-            <span className="font-mono text-3xl text-neutral-300 dark:text-neutral-700">&lt;/&gt;</span>
-          </div>
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        <span className="absolute top-3 left-3 font-mono text-xs font-bold text-neutral-400 dark:text-neutral-500 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-sm px-2 py-1 rounded-md">
-          {String(index + 1).padStart(2, "0")}
-        </span>
-      </div>
-
-      {/* Content */}
-      <div className="flex flex-col flex-1 p-5">
-        <h3 className="font-display font-semibold text-lg group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
-          {project.title}
-        </h3>
-        <p className="mt-2 text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed line-clamp-3 flex-1">
-          {project.desc}
-        </p>
-
-        {/* Tags */}
-        <div className="mt-4 flex flex-wrap gap-1.5">
-          {project.tags.slice(0, 4).map((t) => (
-            <span
-              key={t}
-              className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 border border-neutral-200 dark:border-neutral-700"
-            >
-              {t}
-            </span>
-          ))}
-          {project.tags.length > 4 && (
-            <span className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-neutral-100 dark:bg-neutral-800 text-neutral-400 dark:text-neutral-500">
-              +{project.tags.length - 4}
-            </span>
-          )}
-        </div>
-
-        {/* CTA */}
-        <div className="mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-800">
-          <span className="inline-flex items-center gap-1.5 text-sm font-medium text-emerald-600 dark:text-emerald-400 group-hover:gap-2.5 transition-all">
-            View Details
-            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </span>
-        </div>
-      </div>
-    </Link>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   EXPERIENCE
-   ═══════════════════════════════════════════════════════════════ */
-function ExperienceSection() {
-  return (
-    <section id="experience" className="py-20 md:py-28 scroll-mt-20">
-      <Reveal>
-        <SectionLabel number="02" label="EXPERIENCE" />
-        <h2 className="text-3xl md:text-4xl font-display font-bold mb-12">
-          Professional Experience
-        </h2>
-      </Reveal>
-
-      <div className="grid md:grid-cols-2 gap-6">
-        {EXPERIENCE.map((exp, i) => (
-          <Reveal key={i} delay={i * 120}>
-            <div className="relative rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900/60 p-6 sm:p-8 h-full hover:border-emerald-500/30 transition-colors duration-300">
-              {/* Accent bar */}
-              <div className="absolute top-0 left-6 sm:left-8 right-6 sm:right-8 h-px bg-gradient-to-r from-emerald-500 to-teal-400 opacity-60" />
-
-              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-5">
-                <div>
-                  <h3 className="font-display font-semibold text-lg">{exp.role}</h3>
-                  <p className="text-emerald-600 dark:text-emerald-400 font-medium text-sm mt-0.5">
-                    {exp.company}
-                  </p>
-                </div>
-                <span className="font-mono text-xs text-neutral-500 dark:text-neutral-500 whitespace-nowrap mt-1 sm:mt-1">
-                  {exp.period}
-                </span>
-              </div>
-
-              <ul className="space-y-3">
-                {exp.bullets.map((b, j) => (
-                  <li key={j} className="flex gap-3 text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
-                    <span className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-emerald-500/60" />
-                    <span>{b}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Reveal>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   SKILLS
-   ═══════════════════════════════════════════════════════════════ */
-function SkillsSection() {
-  return (
-    <section id="skills" className="py-20 md:py-28 scroll-mt-20">
-      <Reveal>
-        <SectionLabel number="03" label="TECH STACK" />
-        <h2 className="text-3xl md:text-4xl font-display font-bold mb-12">
-          Technical Arsenal
-        </h2>
-      </Reveal>
-
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {SKILL_CATEGORIES.map((cat, i) => (
-          <Reveal key={cat.label} delay={i * 80}>
-            <div className="space-y-3">
-              <h3 className="font-mono text-xs uppercase tracking-wider text-neutral-500 dark:text-neutral-500">
-                {cat.label}
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {cat.items.map((skill) => (
-                  <span
-                    key={skill}
-                    className="px-3 py-1.5 text-sm rounded-lg bg-neutral-100 dark:bg-neutral-800/80 border border-neutral-200 dark:border-neutral-700/80 text-neutral-700 dark:text-neutral-300 font-medium hover:border-emerald-500/40 hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors duration-200 cursor-default"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </Reveal>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   CONTACT
-   ═══════════════════════════════════════════════════════════════ */
-function ContactSection() {
-  return (
-    <section id="contact" className="py-20 md:py-28 scroll-mt-20">
-      <Reveal>
-        <SectionLabel number="04" label="CONTACT" />
-        <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
-          Let's Connect
-        </h2>
-      </Reveal>
-
-      <Reveal delay={100}>
-        <div className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-gradient-to-br from-white to-neutral-50 dark:from-neutral-900/60 dark:to-neutral-900/40 p-8 sm:p-10">
-          <div className="max-w-2xl">
-            <p className="text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed">
-              I'm open to{" "}
-              <span className="text-neutral-800 dark:text-neutral-200 font-medium">
-                internship opportunities
-              </span>{" "}
-              and{" "}
-              <span className="text-neutral-800 dark:text-neutral-200 font-medium">
-                collaborations
-              </span>{" "}
-              across any field where I can apply my problem-solving skills and passion for technology.
-            </p>
-            <p className="mt-3 font-mono text-sm text-neutral-500 dark:text-neutral-500">
-              {">"} Whether it's embedded systems, robotics, or automotive — let's talk.
-            </p>
-          </div>
-
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a
-              href="mailto:ks4cheem@uwaterloo.ca"
-              className="inline-flex items-center gap-2.5 px-5 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-neutral-950 font-semibold text-sm transition-colors shadow-lg shadow-emerald-500/20"
-            >
-              <MailIcon />
-              Email Me
-            </a>
-            <a
-              href="https://www.linkedin.com/in/kabeer-cheema-b32238288/"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2.5 px-5 py-3 rounded-xl border border-neutral-200 dark:border-neutral-700 hover:border-emerald-500/40 dark:hover:border-emerald-500/40 text-sm font-medium transition-colors hover:text-emerald-600 dark:hover:text-emerald-400"
-            >
-              <LinkedInIcon />
-              LinkedIn
-            </a>
+        <SectionHeader
+          number="01"
+          label="Projects"
+          title="Featured Engineering Projects"
+          description="Selected work across embedded software, sensor fusion, robotics perception, and hardware integration."
+          action={
             <a
               href="https://github.com/kabeercheema"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2.5 px-5 py-3 rounded-xl border border-neutral-200 dark:border-neutral-700 hover:border-emerald-500/40 dark:hover:border-emerald-500/40 text-sm font-medium transition-colors hover:text-emerald-600 dark:hover:text-emerald-400"
+              className="group inline-flex items-center gap-1.5 rounded-lg border border-slate-300/90 px-3 py-1.5 text-xs font-mono uppercase tracking-wide text-slate-600 transition-colors hover:border-cyan-500/50 hover:text-cyan-700 dark:border-slate-700 dark:text-slate-400 dark:hover:text-cyan-300"
             >
-              <GitHubIcon />
-              GitHub
+              View GitHub
+              <ArrowUpRightIcon className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </a>
+          }
+        />
+      </Reveal>
+
+      <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {PROJECTS.map((project, index) => (
+          <Reveal key={project.slug} delay={index * 70} className={index === 0 ? "md:col-span-2" : ""}>
+            <ProjectCard project={project} index={index} featured={index === 0} />
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ExperienceSection() {
+  return (
+    <section id="experience" className="scroll-mt-20 border-t border-slate-200/80 py-16 dark:border-slate-800/80 md:py-20">
+      <Reveal>
+        <SectionHeader
+          number="02"
+          label="Experience"
+          title="Professional Experience"
+          description="Hands-on delivery in autonomous systems and regulated software environments."
+        />
+      </Reveal>
+
+      <div className="mt-8 grid gap-5 md:grid-cols-2">
+        {EXPERIENCE.map((exp, i) => (
+          <Reveal key={`${exp.company}-${exp.role}`} delay={i * 90}>
+            <ExperienceItem experience={exp} />
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function SkillsSection() {
+  return (
+    <section id="skills" className="scroll-mt-20 border-t border-slate-200/80 py-16 dark:border-slate-800/80 md:py-20">
+      <Reveal>
+        <SectionHeader
+          number="03"
+          label="Tech Stack"
+          title="Technical Capabilities"
+          description="Tools and technologies used across firmware, modeling, validation, and deployment."
+        />
+      </Reveal>
+
+      <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {SKILL_CATEGORIES.map((cat, i) => (
+          <Reveal key={cat.label} delay={i * 60}>
+            <div className="h-full rounded-2xl border border-slate-200/90 bg-white/80 p-5 dark:border-slate-800 dark:bg-slate-900/70">
+              <h3 className="font-mono text-[11px] uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">{cat.label}</h3>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {cat.items.map((skill) => (
+                  <SkillBadge key={skill}>{skill}</SkillBadge>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ContactSection() {
+  return (
+    <section id="contact" className="scroll-mt-20 border-t border-slate-200/80 py-16 dark:border-slate-800/80 md:py-20">
+      <Reveal>
+        <SectionHeader
+          number="04"
+          label="Contact"
+          title="Open to Internships and Engineering Collaboration"
+          description="Whether the challenge is embedded systems, robotics, or automotive software, I am ready to contribute and learn quickly."
+        />
+      </Reveal>
+
+      <Reveal delay={90}>
+        <div className="mt-8 rounded-2xl border border-slate-200/90 bg-white/90 p-7 shadow-sm shadow-slate-200/60 dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-black/20 sm:p-9">
+          <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
+            <div>
+              <p className="text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg">
+                I am open to <span className="font-semibold text-slate-900 dark:text-slate-100">internship opportunities</span> and
+                <span className="font-semibold text-slate-900 dark:text-slate-100"> collaborations</span> across any field where I can apply my
+                problem-solving skills and passion for technology.
+              </p>
+              <p className="mt-3 font-mono text-xs uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
+                Embedded systems / robotics / automotive
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-3">
+              <CTAButton href="mailto:ks4cheem@uwaterloo.ca" icon={<MailIcon />}>
+                Email Me
+              </CTAButton>
+              <CTAButton
+                href="https://www.linkedin.com/in/kabeer-cheema-b32238288/"
+                variant="secondary"
+                target="_blank"
+                rel="noreferrer"
+                icon={<LinkedInIcon />}
+              >
+                LinkedIn
+              </CTAButton>
+              <CTAButton
+                href="https://github.com/kabeercheema"
+                variant="secondary"
+                target="_blank"
+                rel="noreferrer"
+                icon={<GitHubIcon />}
+              >
+                GitHub
+              </CTAButton>
+            </div>
           </div>
         </div>
       </Reveal>
@@ -767,27 +632,17 @@ function ContactSection() {
   );
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   FOOTER
-   ═══════════════════════════════════════════════════════════════ */
 function Footer() {
   return (
-    <footer className="border-t border-neutral-200 dark:border-neutral-800">
-      <div className="mx-auto max-w-6xl px-5 sm:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-400 dark:text-neutral-600">
-        <span className="font-mono">
-          © {new Date().getFullYear()} Kabeer Cheema
-        </span>
-        <span className="font-mono">
-          Built with React + Tailwind CSS
-        </span>
+    <footer className="border-t border-slate-200/90 dark:border-slate-800">
+      <div className={`${CONTAINER} flex flex-col items-center justify-between gap-3 py-7 text-xs text-slate-500 dark:text-slate-400 sm:flex-row`}>
+        <span className="font-mono">© {new Date().getFullYear()} Kabeer Cheema</span>
+        <span className="font-mono">Built with React + Tailwind CSS</span>
       </div>
     </footer>
   );
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   PROJECT DETAIL PAGE
-   ═══════════════════════════════════════════════════════════════ */
 function ProjectPage() {
   const { slug } = useParams();
   const project = PROJECTS.find((p) => p.slug === slug);
@@ -798,138 +653,97 @@ function ProjectPage() {
 
   if (!project) {
     return (
-      <div className="mx-auto max-w-6xl px-5 sm:px-8 pt-32 pb-20 text-center">
-        <h1 className="text-3xl font-display font-bold mb-4">Project not found</h1>
-        <p className="text-neutral-500 dark:text-neutral-400 mb-8">
-          The project you're looking for doesn't exist.
-        </p>
+      <div className={`${CONTAINER} pt-32 pb-20 text-center`}>
+        <h1 className="mb-4 font-display text-3xl font-bold">Project not found</h1>
+        <p className="mb-8 text-slate-500 dark:text-slate-400">The project you are looking for does not exist.</p>
         <Link
           to="/"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700 hover:border-emerald-500/50 text-sm font-medium transition-colors"
+          className="inline-flex items-center gap-2 rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium transition-colors hover:border-cyan-500/50 dark:border-slate-700"
         >
-          ← Back to Home
+          &larr; Back to Home
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto max-w-4xl px-5 sm:px-8 pt-28 pb-20">
-      {/* Back */}
+    <div className="mx-auto max-w-4xl px-5 pt-28 pb-20 sm:px-8">
       <Reveal>
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-sm font-mono text-neutral-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors mb-10"
+          className="mb-8 inline-flex items-center gap-2 text-sm font-mono text-slate-500 transition-colors hover:text-cyan-700 dark:text-slate-400 dark:hover:text-cyan-300"
         >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
+          <ArrowLeftIcon className="h-4 w-4" />
           Back to Projects
         </Link>
       </Reveal>
 
-      {/* Tags */}
       <Reveal delay={50}>
-        <div className="flex flex-wrap gap-1.5 mb-4">
-          {project.tags.map((t) => (
-            <span
-              key={t}
-              className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 border border-neutral-200 dark:border-neutral-700"
-            >
-              {t}
-            </span>
+        <div className="mb-4 flex flex-wrap gap-1.5">
+          {project.tags.map((tag) => (
+            <SkillBadge key={tag}>{tag}</SkillBadge>
           ))}
         </div>
       </Reveal>
 
-      {/* Title */}
       <Reveal delay={100}>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold tracking-tight leading-tight">
+        <h1 className="text-3xl font-display font-bold tracking-tight text-slate-900 dark:text-slate-100 sm:text-4xl md:text-5xl">
           {project.title}
         </h1>
-        <div className="mt-4 w-16 h-0.5 bg-emerald-500" />
+        <div className="mt-4 h-0.5 w-16 bg-cyan-500" />
       </Reveal>
 
-      {/* Hero image */}
       {project.hero && (
-        <Reveal delay={200}>
-          <div className="mt-10 rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800">
-            <img
-              src={project.hero}
-              alt={`${project.title} preview`}
-              className="w-full h-auto object-cover"
-            />
+        <Reveal delay={180}>
+          <div className="mt-8 overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800">
+            <img src={project.hero} alt={`${project.title} preview`} className="h-auto w-full object-cover" />
           </div>
         </Reveal>
       )}
 
-      {/* Overview */}
-      <Reveal delay={300}>
-        <div className="mt-10">
-          <h2 className="font-display font-semibold text-xl mb-4 text-neutral-800 dark:text-neutral-200">
-            Overview
-          </h2>
-          <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed text-base sm:text-lg">
-            {project.desc}
-          </p>
+      <Reveal delay={260}>
+        <div className="mt-9">
+          <h2 className="mb-3 font-display text-xl font-semibold">Overview</h2>
+          <p className="text-base leading-relaxed text-slate-600 dark:text-slate-300">{project.desc}</p>
         </div>
       </Reveal>
 
-      {/* Key Highlights */}
       {project.details?.length > 0 && (
-        <div className="mt-12">
+        <div className="mt-10 space-y-3">
           <Reveal>
-            <h2 className="font-display font-semibold text-xl mb-6 text-neutral-800 dark:text-neutral-200">
-              Key Highlights
-            </h2>
+            <h2 className="mb-4 font-display text-xl font-semibold">Key Highlights</h2>
           </Reveal>
-          <div className="space-y-3">
-            {project.details.map((d, i) => (
-              <Reveal key={i} delay={i * 60}>
-                <div className="flex gap-4 p-4 rounded-xl bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-100 dark:border-neutral-800">
-                  <span className="flex-shrink-0 font-mono text-sm font-bold text-emerald-500/70 mt-0.5 w-6">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
-                    {d}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+
+          {project.details.map((detail, i) => (
+            <Reveal key={detail} delay={i * 45}>
+              <div className="flex gap-3 rounded-xl border border-slate-200/90 bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-900/60">
+                <span className="mt-0.5 w-6 flex-shrink-0 font-mono text-xs font-semibold text-cyan-600 dark:text-cyan-400">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">{detail}</p>
+              </div>
+            </Reveal>
+          ))}
         </div>
       )}
 
-      {/* Repo link */}
       {project.links?.repo && (
-        <Reveal delay={200}>
-          <div className="mt-12">
-            <a
-              href={project.links.repo}
-              target="_blank"
-              rel="noreferrer"
-              className="group inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-neutral-950 font-semibold text-sm transition-colors shadow-lg shadow-emerald-500/20"
-            >
-              <GitHubIcon />
+        <Reveal delay={180}>
+          <div className="mt-10">
+            <CTAButton href={project.links.repo} target="_blank" rel="noreferrer" icon={<GitHubIcon />}>
               View Repository
-              <svg className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H9M17 7v8" />
-              </svg>
-            </a>
+            </CTAButton>
           </div>
         </Reveal>
       )}
 
-      {/* Bottom nav */}
       <Reveal delay={100}>
-        <div className="mt-16 pt-8 border-t border-neutral-200 dark:border-neutral-800">
+        <div className="mt-14 border-t border-slate-200 pt-7 dark:border-slate-800">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-sm font-mono text-neutral-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+            className="inline-flex items-center gap-2 text-sm font-mono text-slate-500 transition-colors hover:text-cyan-700 dark:text-slate-400 dark:hover:text-cyan-300"
           >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
+            <ArrowLeftIcon className="h-4 w-4" />
             Back to All Projects
           </Link>
         </div>
@@ -938,24 +752,133 @@ function ProjectPage() {
   );
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   UI COMPONENTS
-   ═══════════════════════════════════════════════════════════════ */
-function SectionLabel({ number, label }) {
+function SectionHeader({ number, label, title, description, action }) {
   return (
-    <div className="flex items-center gap-3 mb-3">
-      <span className="font-mono text-sm font-semibold text-emerald-600 dark:text-emerald-400">
-        {number}
-      </span>
-      <div className="w-8 h-px bg-neutral-300 dark:bg-neutral-700" />
-      <span className="font-mono text-sm text-neutral-400 dark:text-neutral-500 uppercase tracking-wider">
-        {label}
-      </span>
+    <div className="space-y-3">
+      <div className="flex items-center gap-3">
+        <span className="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-cyan-600 dark:text-cyan-400">{number}</span>
+        <div className="h-px w-8 bg-slate-300 dark:bg-slate-700" />
+        <span className="font-mono text-xs uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">{label}</span>
+      </div>
+
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div className="max-w-2xl">
+          <h2 className="text-2xl font-display font-bold tracking-tight text-slate-900 dark:text-slate-100 sm:text-3xl md:text-4xl">{title}</h2>
+          {description ? <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300 sm:text-base">{description}</p> : null}
+        </div>
+        {action}
+      </div>
     </div>
   );
 }
 
-/* ─── Icons ─── */
+function ProjectCard({ project, index, featured = false }) {
+  return (
+    <Link
+      to={`/projects/${project.slug}`}
+      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200/90 bg-white/90 shadow-sm shadow-slate-200/50 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/40 dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-black/20"
+    >
+      <div className={`relative overflow-hidden bg-slate-100 dark:bg-slate-800 ${featured ? "aspect-[16/8]" : "aspect-video"}`}>
+        {project.hero ? (
+          <img src={project.hero} alt={project.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center">
+            <span className="font-mono text-3xl text-slate-300 dark:text-slate-600">&lt;/&gt;</span>
+          </div>
+        )}
+        <span className="absolute left-3 top-3 rounded-md border border-slate-300/80 bg-white/80 px-2 py-0.5 font-mono text-[11px] text-slate-500 backdrop-blur dark:border-slate-700/80 dark:bg-slate-900/85 dark:text-slate-400">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+      </div>
+
+      <div className="flex flex-1 flex-col p-5">
+        {featured ? (
+          <span className="mb-2 font-mono text-[11px] uppercase tracking-[0.14em] text-cyan-600 dark:text-cyan-400">Featured Project</span>
+        ) : null}
+        <h3 className="font-display text-lg font-semibold tracking-tight text-slate-900 transition-colors group-hover:text-cyan-700 dark:text-slate-100 dark:group-hover:text-cyan-300">
+          {project.title}
+        </h3>
+        <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{project.desc}</p>
+
+        <div className="mt-4 flex flex-wrap gap-1.5">
+          {project.tags.slice(0, 4).map((tag) => (
+            <SkillBadge key={tag}>{tag}</SkillBadge>
+          ))}
+          {project.tags.length > 4 ? (
+            <span className="rounded-md border border-slate-200 bg-slate-100 px-2 py-0.5 font-mono text-[11px] text-slate-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400">
+              +{project.tags.length - 4}
+            </span>
+          ) : null}
+        </div>
+
+        <div className="mt-4 border-t border-slate-200/80 pt-4 dark:border-slate-800">
+          <span className="inline-flex items-center gap-1.5 text-sm font-medium text-cyan-700 transition-all group-hover:gap-2.5 dark:text-cyan-300">
+            View Details
+            <ArrowRightIcon className="h-3.5 w-3.5" />
+          </span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+function ExperienceItem({ experience }) {
+  return (
+    <article className="h-full rounded-2xl border border-slate-200/90 bg-white/90 p-6 shadow-sm shadow-slate-200/50 transition-colors hover:border-cyan-500/35 dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-black/20 sm:p-7">
+      <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <h3 className="font-display text-xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">{experience.role}</h3>
+          <p className="mt-0.5 text-sm font-medium text-cyan-700 dark:text-cyan-300">{experience.company}</p>
+        </div>
+        <span className="font-mono text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">{experience.period}</span>
+      </div>
+
+      <ul className="space-y-3">
+        {experience.bullets.map((bullet) => (
+          <li key={bullet} className="flex gap-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+            <span className="mt-[9px] h-1.5 w-1.5 flex-shrink-0 rounded-full bg-cyan-500/70" />
+            <span>{bullet}</span>
+          </li>
+        ))}
+      </ul>
+    </article>
+  );
+}
+
+function SkillBadge({ children }) {
+  return (
+    <span className="rounded-md border border-slate-200 bg-slate-100 px-2 py-0.5 font-mono text-[11px] text-slate-600 transition-colors hover:border-cyan-500/40 hover:text-cyan-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:text-cyan-300">
+      {children}
+    </span>
+  );
+}
+
+function CTAButton({ children, href, onClick, variant = "primary", icon, className = "", ...rest }) {
+  const base = "inline-flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold transition-all";
+  const variants = {
+    primary: "bg-cyan-500 text-slate-950 hover:bg-cyan-400 shadow-sm shadow-cyan-500/20",
+    secondary:
+      "border border-slate-300 bg-transparent text-slate-700 hover:border-cyan-500/40 hover:text-cyan-700 dark:border-slate-700 dark:text-slate-200 dark:hover:text-cyan-300",
+  };
+  const classes = `${base} ${variants[variant]} ${className}`;
+
+  if (href) {
+    return (
+      <a href={href} onClick={onClick} className={classes} {...rest}>
+        {icon}
+        {children}
+      </a>
+    );
+  }
+
+  return (
+    <button type="button" onClick={onClick} className={classes} {...rest}>
+      {icon}
+      {children}
+    </button>
+  );
+}
+
 function SunIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
@@ -1018,6 +941,30 @@ function GitHubIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
       <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+    </svg>
+  );
+}
+
+function ArrowRightIcon({ className = "" }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+    </svg>
+  );
+}
+
+function ArrowLeftIcon({ className = "" }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+    </svg>
+  );
+}
+
+function ArrowUpRightIcon({ className = "" }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H9M17 7v8" />
     </svg>
   );
 }
