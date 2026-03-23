@@ -131,12 +131,6 @@ const NAV_ITEMS = [
 ];
 const NAV_SECTION_IDS = NAV_ITEMS.map((item) => item.id);
 
-const HERO_METRICS = [
-  { value: "+85%", label: "Tracking accuracy uplift" },
-  { value: "Linux + CAN", label: "Production-style systems" },
-  { value: "HIL", label: "Validation workflow" },
-];
-
 const CONTAINER = "mx-auto max-w-6xl px-5 sm:px-8";
 
 function useInView(options) {
@@ -467,20 +461,12 @@ function Hero() {
           </div>
 
           <Reveal delay={260}>
-            <div className="rounded-2xl border border-slate-200/90 bg-white/90 p-6 shadow-sm shadow-slate-200/60 dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-black/20">
-              <p className="mb-5 font-mono text-[11px] uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
-                Engineering Highlights
-              </p>
-              <div className="space-y-4">
-                {HERO_METRICS.map((item) => (
-                  <div key={item.label} className="border-l-2 border-cyan-500/60 pl-3">
-                    <p className="text-xl font-display font-semibold tracking-tight text-slate-900 dark:text-slate-100">
-                      {item.value}
-                    </p>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">{item.label}</p>
-                  </div>
-                ))}
-              </div>
+            <div className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white/90 shadow-sm shadow-slate-200/60 dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-black/20">
+              <img
+                src={getAssetPath("images/hero.jpg")}
+                alt="Kabeer Cheema portrait"
+                className="aspect-[4/5] w-full object-cover"
+              />
             </div>
           </Reveal>
         </div>
