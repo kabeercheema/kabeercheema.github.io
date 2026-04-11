@@ -44,7 +44,7 @@ const PROJECTS = [
       "Date: March 2026.",
     ],
     links: {},
-    hero: "",
+    hero: getAssetPath("images/projects/arch"),
   },
   {
     slug: "pi4-can-gateway",
