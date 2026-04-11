@@ -81,45 +81,98 @@ const PROJECTS = [
     links: { repo: "https://github.com/kabeercheema/RC-F1-Car-Firmware" },
     hero: "",
   },
+  {
+    slug: "multi-agent-ai-orchestrator",
+    title: "Multi-Agent AI Orchestrator Prototype",
+    desc: "Proof-of-concept productivity platform built with Next.js and Vercel AI SDK to coordinate multiple AI agents, pass shared context, and automate cross-step workflows.",
+    tags: ["Next.js", "Vercel AI SDK", "Full-stack", "Agentic Systems", "Automation"],
+    details: [
+      "Built an end-to-end prototype with a Next.js frontend and API-driven backend routes for multi-agent task execution.",
+      "Designed an orchestration layer where specialized agents exchange context and hand off tasks for complex workflow completion.",
+      "Implemented robust data handoff patterns to reduce manual context switching and simulate autonomous software operations.",
+      "Date: April 2026.",
+    ],
+    links: {},
+    hero: "",
+  },
+  {
+    slug: "autonomous-taxi-hackathon-winner",
+    title: "Autonomous Taxi Hackathon Winner (Team Tronsformers)",
+    desc: "1st place overall at Hack the Move with an end-to-end autonomous taxi simulation spanning perception, localization, planning, and control.",
+    tags: ["MATLAB", "Simulink", "Python", "YOLOv8", "Control Systems", "Hackathon"],
+    details: [
+      "Awarded 1st Place Overall at Hack the Move.",
+      "Engineered a full-stack simulation integrating perception, localization, planning, and vehicle control in MATLAB/Simulink.",
+      "Built a Python + YOLOv8 perception pipeline for real-time stop-sign and traffic-light detection with 88% accuracy.",
+      "Implemented a finite-state controller and target-speed profiling, achieving a 100% collision-free result with zero safety infractions.",
+      "Date: March 2026.",
+    ],
+    links: {},
+    hero: "",
+  },
+  {
+    slug: "international-finalist-lidar-safety-system",
+    title: "International Finalist - LiDAR Safety System (ESV)",
+    desc: "Pedestrian-awareness system for vehicle blind spots using a deployable 2D LiDAR perception pipeline with real-time CAN alerting.",
+    tags: ["C++", "Python", "scikit-learn", "CAN", "HIL/VIL", "Safety-Critical"],
+    details: [
+      "Selected by NHTSA and Transport Canada for global presentation at the ESV conference.",
+      "Developed a deployable 2D LiDAR blind-spot perception module with high-speed Ethernet intake in C++.",
+      "Built downstream Python classification workflows using scikit-learn and NumPy for precise pedestrian detection.",
+      "Integrated output with vehicle CAN network to trigger low-latency driver alerts in real time.",
+      "Passed HIL and VIL validation with over 96% detection rate.",
+      "Presentation date: May 2026.",
+    ],
+    links: {},
+    hero: getAssetPath("images/projects/lidar.gif"),
+  },
 ];
 
 const EXPERIENCE = [
   {
-    role: "Connected & Autonomous Vehicles Lead",
-    company: "UWaterloo EcoCAR",
+    role: "Autonomous Vehicle Software Lead",
+    company: "UWaterloo EcoCAR Team",
     period: "May 2025 - Present",
     bullets: [
-      "Deployed a Raspberry Pi 4 CAN gateway on Linux with Bash automation and Python multithreading for low-latency, real-time control; validated via HIL.",
-      "Built a 2D LiDAR supervisory detector in RTMaps + Python with C++ UART/TCP I/O; used scikit-learn + NumPy with OpenCV visualization.",
-      "Designed radar + camera sensor fusion in Simulink/MATLAB with RTMaps + Python; improved tracking accuracy by 85%.",
+      "Deployed a Linux-based Raspberry Pi CAN gateway communicating with Cadillac LYRIQ ECUs using robust Bash tooling and a multithreaded Python service for low-latency status light and switch messaging; validated with HIL testing.",
+      "Developed a 2D LiDAR object-detection pipeline using C++ TCP socket sensor I/O, pipelined into Python machine learning processing (scikit-learn, NumPy) and OpenCV for real-time visualization.",
+      "Designed and implemented radar-camera sensor fusion using Kalman filtering in Simulink with RTMaps middleware and Python, improving ADAS object-tracking accuracy by 85%.",
+      "Led system bring-up and software deployment on an Ubuntu ADAS computer while troubleshooting in-vehicle CAN buses with CANalyzer.",
     ],
   },
   {
-    role: "Software QA Engineer",
+    role: "Technology Product Manager Co-op (Automation & Data Focus)",
+    company: "Purolator",
+    period: "Jan 2026 - Present",
+    bullets: [
+      "Transitioned product intake from manual to automated by architecting a centralized product tracking system and engineering an API-driven automation agent, reducing time-to-triage by 50%.",
+      "Spearheaded data-driven partner targeting using Python and pandas, analyzing large datasets from 50+ eCommerce partners to identify high-value technical opportunities.",
+      "Scoped MVPs from discovery to engineering-ready plans by defining system constraints, API dependencies, and end-to-end data flow architectures.",
+    ],
+  },
+  {
+    role: "Software QA Engineer Co-op",
     company: "i4i",
     period: "Jan 2024 - Dec 2024",
     bullets: [
-      "Built a Python/XSLT tool to convert Excel metadata into Word, increasing team productivity by ~90%.",
-      "Led functional, regression, and performance test cycles; coordinated QA contributors across releases.",
-      "Authored release notes and validation documents aligned with FDA/Health Canada guidelines.",
+      "Engineered an automation tool in Python and XML that parsed Excel metadata and dynamically generated formatted Word documents, increasing conversion-team productivity by over 90%.",
+      "Developed and maintained Pytest unit-test infrastructure, automating functional and regression testing while supporting high-load enterprise performance test execution.",
     ],
   },
 ];
 
 const SKILL_CATEGORIES = [
-  { label: "Languages", items: ["C/C++", "Python", "Bash"] },
-  { label: "Libraries & Frameworks", items: ["NumPy", "pandas", "scikit-learn", "OpenCV", "RTMaps"] },
-  { label: "Systems & Infrastructure", items: ["Linux", "systemd", "Multithreading"] },
-  { label: "Simulation & CAD", items: ["MATLAB/Simulink", "Altium Designer", "LTspice", "SolidWorks"] },
-  { label: "Dev & Workflow", items: ["Git", "Jira"] },
+  { label: "Languages", items: ["C", "C++", "Python", "Next.js", "Bash", "VHDL", "XML"] },
+  { label: "Tools & Utilities", items: ["Linux", "Git", "Jira", "CANalyzer", "MATLAB/Simulink", "Vercel AI SDK"] },
+  { label: "Libraries & Frameworks", items: ["NumPy", "Pandas", "Scikit-Learn", "Pytest", "OpenCV", "Threading (multiprocessing/IPC)"] },
 ];
 
 const HERO_PHRASES = [
-  "real-time embedded systems",
-  "robotics perception pipelines",
-  "sensor fusion algorithms",
-  "reliable automotive firmware",
-  "hardware-software integrations",
+  "systems-level autonomous software",
+  "high-performance perception pipelines",
+  "sensor integration with intelligent orchestration",
+  "API-driven automation architecture",
+  "software engineering for autonomous systems",
 ];
 
 const NAV_ITEMS = [
@@ -127,6 +180,7 @@ const NAV_ITEMS = [
   { id: "projects", label: "Projects" },
   { id: "experience", label: "Experience" },
   { id: "skills", label: "Skills" },
+  { id: "education", label: "Education" },
   { id: "contact", label: "Contact" },
 ];
 const NAV_SECTION_IDS = NAV_ITEMS.map((item) => item.id);
@@ -323,9 +377,14 @@ function Navbar({ isDark, toggleTheme }) {
               navigate("/");
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
-            className="rounded-md px-1 py-0.5 font-display text-lg font-bold tracking-tight text-slate-900 transition-opacity hover:opacity-80 dark:text-slate-100"
+            className="rounded-md px-1 py-0.5 transition-opacity hover:opacity-80"
           >
-            kabeer<span className="text-cyan-500">.</span>
+            <span className="inline-flex items-center gap-2">
+              <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-cyan-500/45 bg-cyan-500/10 font-mono text-xs font-bold tracking-wide text-cyan-700 dark:text-cyan-300">
+                KC
+              </span>
+              <span className="font-display text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100">kabeer cheema</span>
+            </span>
           </button>
 
           <ul className="hidden items-center gap-1.5 md:flex">
@@ -404,6 +463,7 @@ function HomePage() {
         <ProjectsSection />
         <ExperienceSection />
         <SkillsSection />
+        <EducationSection />
         <ContactSection />
       </main>
     </>
@@ -424,20 +484,21 @@ function Hero() {
           <div>
             <Reveal>
               <p className="mb-3 font-mono text-xs uppercase tracking-[0.16em] text-cyan-600 dark:text-cyan-400">
-                Mechatronics Engineering Portfolio
+                Software Engineering & Autonomous Systems Portfolio
               </p>
             </Reveal>
 
             <Reveal delay={60}>
               <h1 className="text-4xl font-display font-bold tracking-tight text-slate-900 dark:text-slate-50 sm:text-5xl md:text-6xl">
-                Embedded, Robotics, and Real-Time Systems Engineering.
+                Software Engineer & Autonomous Systems Developer.
               </h1>
             </Reveal>
 
             <Reveal delay={120}>
               <p className="mt-5 max-w-3xl text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg">
-                I am Kabeer Cheema, a Mechatronics Engineering student at the University of Waterloo focused on
-                building dependable hardware-software systems for autonomous and embedded applications.
+                I am Kabeer Cheema, currently in my 3A term of Mechatronics Engineering at the University of Waterloo
+                (GPA: 93%). I build high-performance software for autonomous vehicles, robotics, and full-stack
+                automation by bridging low-level sensors with intelligent software orchestration.
               </p>
             </Reveal>
 
@@ -540,7 +601,7 @@ function SkillsSection() {
           number="03"
           label="Tech Stack"
           title="Technical Capabilities"
-          description="Tools and technologies used across firmware, modeling, validation, and deployment."
+          description="Core languages, tools, and frameworks used for systems engineering, ML integrations, and production software delivery."
         />
       </Reveal>
 
@@ -562,15 +623,59 @@ function SkillsSection() {
   );
 }
 
+function EducationSection() {
+  return (
+    <section id="education" className="scroll-mt-20 border-t border-slate-200/80 py-16 dark:border-slate-800/80 md:py-20">
+      <Reveal>
+        <SectionHeader
+          number="04"
+          label="Education"
+          title="Academic Foundation"
+          description="Strong performance in mechatronics engineering with systems, controls, and software depth for autonomous platforms."
+        />
+      </Reveal>
+
+      <Reveal delay={90}>
+        <article className="mt-8 rounded-2xl border border-slate-200/90 bg-white/90 p-6 shadow-sm shadow-slate-200/50 dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-black/20 sm:p-7">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <h3 className="font-display text-xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+                University of Waterloo
+              </h3>
+              <p className="mt-0.5 text-sm font-medium text-cyan-700 dark:text-cyan-300">
+                BASc. Mechatronics Engineering (Currently in 3A Term)
+              </p>
+            </div>
+            <span className="font-mono text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">
+              Sept 2023 - Apr 2028
+            </span>
+          </div>
+
+          <div className="mt-5 grid gap-3 sm:grid-cols-2">
+            <div className="rounded-xl border border-slate-200/90 bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-900/60">
+              <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">Academic Standing</p>
+              <p className="mt-1 text-sm font-semibold text-slate-900 dark:text-slate-100">GPA: 93%</p>
+            </div>
+            <div className="rounded-xl border border-slate-200/90 bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-900/60">
+              <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">Focus</p>
+              <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">Autonomous systems, software architecture, and embedded intelligence</p>
+            </div>
+          </div>
+        </article>
+      </Reveal>
+    </section>
+  );
+}
+
 function ContactSection() {
   return (
     <section id="contact" className="scroll-mt-20 border-t border-slate-200/80 py-16 dark:border-slate-800/80 md:py-20">
       <Reveal>
         <SectionHeader
-          number="04"
+          number="05"
           label="Contact"
-          title="Open to Internships and Engineering Collaboration"
-          description="Whether the challenge is embedded systems, robotics, or automotive software, I am ready to contribute and learn quickly."
+          title="Open to Software Engineering and Autonomous Systems Roles"
+          description="I am actively seeking opportunities where I can contribute to high-impact software, autonomy, and systems integration work."
         />
       </Reveal>
 
@@ -579,12 +684,12 @@ function ContactSection() {
           <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
             <div>
               <p className="text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg">
-                I am open to <span className="font-semibold text-slate-900 dark:text-slate-100">internship opportunities</span> and
-                <span className="font-semibold text-slate-900 dark:text-slate-100"> collaborations</span> across any field where I can apply my
-                problem-solving skills and passion for technology.
+                I specialize in systems-level programming, machine learning integrations, and robust software
+                architecture for autonomous platforms. If your team is building reliability-critical software, I would
+                love to connect.
               </p>
               <p className="mt-3 font-mono text-xs uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
-                Embedded systems / robotics / automotive
+                ks4cheem@uwaterloo.ca / 519-500-2915 / linkedin.com/in/kabeercheema
               </p>
             </div>
 
@@ -593,13 +698,16 @@ function ContactSection() {
                 Email Me
               </CTAButton>
               <CTAButton
-                href="https://www.linkedin.com/in/kabeer-cheema-b32238288/"
+                href="https://linkedin.com/in/kabeercheema"
                 variant="secondary"
                 target="_blank"
                 rel="noreferrer"
                 icon={<LinkedInIcon />}
               >
                 LinkedIn
+              </CTAButton>
+              <CTAButton href="tel:+15195002915" variant="secondary" icon={<PhoneIcon />}>
+                Call
               </CTAButton>
               <CTAButton
                 href="https://github.com/kabeercheema"
@@ -615,6 +723,14 @@ function ContactSection() {
         </div>
       </Reveal>
     </section>
+  );
+}
+
+function PhoneIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.8 19.8 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.8 19.8 0 012.08 4.18 2 2 0 014 2h3a2 2 0 012 1.72c.12.9.33 1.77.62 2.6a2 2 0 01-.45 2.11L8.1 9.9a16 16 0 006 6l1.47-1.09a2 2 0 012.11-.45c.83.29 1.7.5 2.6.62A2 2 0 0122 16.92z" />
+    </svg>
   );
 }
 
