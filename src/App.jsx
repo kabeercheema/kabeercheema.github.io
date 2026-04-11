@@ -113,7 +113,7 @@ const PROJECTS = [
       "Date: April 2026.",
     ],
     links: {},
-    hero: "",
+    hero: getAssetPath("images/projects/architecture.png"),
   },
 ];
 
