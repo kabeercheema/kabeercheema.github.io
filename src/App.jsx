@@ -44,7 +44,7 @@ const PROJECTS = [
       "Date: March 2026.",
     ],
     links: {},
-    hero: getAssetPath("images/projects/arch"),
+    hero: getAssetPath("images/projects/architecture.png"),
   },
   {
     slug: "pi4-can-gateway",
@@ -113,7 +113,7 @@ const PROJECTS = [
       "Date: April 2026.",
     ],
     links: {},
-    hero: getAssetPath("images/projects/architecture.png"),
+    hero: "",
   },
 ];
 
@@ -516,7 +516,7 @@ function Hero() {
               <img
                 src={getAssetPath("images/hero.jpg")}
                 alt="Kabeer Cheema portrait"
-                className="aspect-[4/5] w-full object-cover"
+                className="aspect-[4/5] w-full object-cover object-[center_20%]"
               />
             </div>
           </Reveal>
