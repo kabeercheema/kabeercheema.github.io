@@ -10,9 +10,9 @@ const getAssetPath = (path) => {
 const PROJECTS = [
   {
     slug: "lidar-supervisory-detector",
-    title: "2D LiDAR Supervisory Detector",
-    desc: "Real-time supervisor that cross-checks OEM ADAS detections with 2D LiDAR evidence in RTMaps. C++ handles UART/TCP intake; a Python (NumPy + scikit-learn) pipeline cleans, clusters, and scores; OpenCV provides live viz and log replay.",
-    tags: ["RTMaps", "Python", "C++", "scikit-learn", "NumPy", "OpenCV", "Real-time"],
+    title: "2D LiDAR Supervisory Detector | International Finalist LiDAR Safety System",
+    desc: "Evolved from a real-time 2D LiDAR supervisory detector into an internationally recognized blind-spot safety system. C++ handles high-speed UART/TCP/Ethernet intake, while Python (NumPy + scikit-learn) and OpenCV power perception, validation, and alert-ready outputs for ADAS workflows.",
+    tags: ["RTMaps", "Python", "C++", "scikit-learn", "NumPy", "OpenCV", "CAN", "HIL/VIL", "Safety-Critical", "Real-time"],
     details: [
       "Stack: RTMaps graph; C++ RPLidar driver (UART/TCP); Python processing nodes; OpenCV UI.",
       "Flow: LiDAR frames -> preprocessing -> feature vectorization -> clustering/classification -> per-object confidence.",
@@ -22,9 +22,29 @@ const PROJECTS = [
       "Tooling: YAML configs for extrinsics, ROIs, thresholds; CLI switch for live vs log replay.",
       "Validation: RTMaps log replay (HIL-style); sub-frame latency at native LiDAR rate; robust to clutter/noise.",
       "Deployment: runs on Linux (Raspberry Pi 4) under systemd with clean shutdown and auto-restart.",
+      "Selected by NHTSA and Transport Canada as an International Finalist at ESV.",
+      "Expanded system architecture for deployable blind-spot pedestrian awareness with high-speed Ethernet interfacing.",
+      "Integrated low-latency CAN alert outputs for real-time in-vehicle safety signaling.",
+      "Passed HIL and VIL validation with over 96% detection rate.",
+      "Presentation date: May 2026.",
     ],
     links: { repo: "https://github.com/kabeercheema/RPLidarC1-ObjectDetection" },
     hero: getAssetPath("images/projects/lidar.gif"),
+  },
+  {
+    slug: "autonomous-taxi-hackathon-winner",
+    title: "Autonomous Taxi Hackathon Winner",
+    desc: "1st place overall at Hack the Move with an end-to-end autonomous taxi simulation spanning perception, localization, planning, and control.",
+    tags: ["MATLAB", "Simulink", "Python", "YOLOv8", "Control Systems", "Hackathon"],
+    details: [
+      "Awarded 1st Place Overall at Hack the Move.",
+      "Engineered a full-stack simulation integrating perception, localization, planning, and vehicle control in MATLAB/Simulink.",
+      "Built a Python + YOLOv8 perception pipeline for real-time stop-sign and traffic-light detection with 88% accuracy.",
+      "Implemented a finite-state controller and target-speed profiling, achieving a 100% collision-free result with zero safety infractions.",
+      "Date: March 2026.",
+    ],
+    links: {},
+    hero: "",
   },
   {
     slug: "pi4-can-gateway",
@@ -94,37 +114,6 @@ const PROJECTS = [
     ],
     links: {},
     hero: "",
-  },
-  {
-    slug: "autonomous-taxi-hackathon-winner",
-    title: "Autonomous Taxi Hackathon Winner (Team Tronsformers)",
-    desc: "1st place overall at Hack the Move with an end-to-end autonomous taxi simulation spanning perception, localization, planning, and control.",
-    tags: ["MATLAB", "Simulink", "Python", "YOLOv8", "Control Systems", "Hackathon"],
-    details: [
-      "Awarded 1st Place Overall at Hack the Move.",
-      "Engineered a full-stack simulation integrating perception, localization, planning, and vehicle control in MATLAB/Simulink.",
-      "Built a Python + YOLOv8 perception pipeline for real-time stop-sign and traffic-light detection with 88% accuracy.",
-      "Implemented a finite-state controller and target-speed profiling, achieving a 100% collision-free result with zero safety infractions.",
-      "Date: March 2026.",
-    ],
-    links: {},
-    hero: "",
-  },
-  {
-    slug: "international-finalist-lidar-safety-system",
-    title: "International Finalist - LiDAR Safety System (ESV)",
-    desc: "Pedestrian-awareness system for vehicle blind spots using a deployable 2D LiDAR perception pipeline with real-time CAN alerting.",
-    tags: ["C++", "Python", "scikit-learn", "CAN", "HIL/VIL", "Safety-Critical"],
-    details: [
-      "Selected by NHTSA and Transport Canada for global presentation at the ESV conference.",
-      "Developed a deployable 2D LiDAR blind-spot perception module with high-speed Ethernet intake in C++.",
-      "Built downstream Python classification workflows using scikit-learn and NumPy for precise pedestrian detection.",
-      "Integrated output with vehicle CAN network to trigger low-latency driver alerts in real time.",
-      "Passed HIL and VIL validation with over 96% detection rate.",
-      "Presentation date: May 2026.",
-    ],
-    links: {},
-    hero: getAssetPath("images/projects/lidar.gif"),
   },
 ];
 
@@ -490,15 +479,16 @@ function Hero() {
 
             <Reveal delay={60}>
               <h1 className="text-4xl font-display font-bold tracking-tight text-slate-900 dark:text-slate-50 sm:text-5xl md:text-6xl">
-                Software Engineer & Autonomous Systems Developer.
+                Mechatronics Engineering Student | Software & Autonomous Systems
               </h1>
             </Reveal>
 
             <Reveal delay={120}>
               <p className="mt-5 max-w-3xl text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg">
-                I am Kabeer Cheema, currently in my 3A term of Mechatronics Engineering at the University of Waterloo
-                (GPA: 93%). I build high-performance software for autonomous vehicles, robotics, and full-stack
-                automation by bridging low-level sensors with intelligent software orchestration.
+                I am Kabeer Cheema, currently in my 3A term of Mechatronics Engineering at the University of Waterloo.
+                I am passionate about developing software for autonomous vehicles, robotics, and full-stack systems. My
+                work focuses on the intersection of hardware and software, and I am continuously expanding my skills in
+                systems-level programming, machine learning, and hardware integration.
               </p>
             </Reveal>
 
