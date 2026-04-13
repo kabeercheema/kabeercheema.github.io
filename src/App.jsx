@@ -512,7 +512,7 @@ function Hero() {
           </div>
 
           <Reveal delay={260}>
-            <div className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white/90 shadow-sm shadow-slate-200/60 dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-black/20">
+            <div className="mx-auto w-[88%] overflow-hidden rounded-2xl border border-slate-200/90 bg-white/90 shadow-sm shadow-slate-200/60 dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-black/20 lg:w-full">
               <img
                 src={getAssetPath("images/hero.jpg")}
                 alt="Kabeer Cheema portrait"
