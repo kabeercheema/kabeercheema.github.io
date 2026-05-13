@@ -7,6 +7,9 @@ const getAssetPath = (path) => {
   return base + clean;
 };
 
+const RESUME_VERSION = "2026-05-13";
+const getResumeUrl = () => `${getAssetPath("resume.pdf")}?v=${RESUME_VERSION}`;
+
 const PROJECTS = [
   {
     slug: "lidar-supervisory-detector",
@@ -402,7 +405,7 @@ function Navbar({ isDark, toggleTheme }) {
               {isDark ? <SunIcon /> : <MoonIcon />}
             </button>
             <a
-              href={getAssetPath("resume.pdf")}
+              href={getResumeUrl()}
               className="hidden items-center gap-1.5 rounded-lg border border-cyan-500/40 px-3.5 py-1.5 text-sm font-medium text-cyan-700 transition-colors hover:bg-cyan-500/10 dark:text-cyan-300 sm:inline-flex"
             >
               <DownloadIcon />
@@ -432,7 +435,7 @@ function Navbar({ isDark, toggleTheme }) {
               </button>
             ))}
             <a
-              href={getAssetPath("resume.pdf")}
+              href={getResumeUrl()}
               className="mt-6 inline-flex items-center gap-2 rounded-xl bg-cyan-500 px-6 py-3 text-lg font-semibold text-slate-950 transition-colors hover:bg-cyan-400"
             >
               <DownloadIcon /> Resume
@@ -504,7 +507,7 @@ function Hero() {
                 <CTAButton onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}>
                   View Projects
                 </CTAButton>
-                <CTAButton href={getAssetPath("resume.pdf")} variant="secondary" icon={<DownloadIcon />}>
+                <CTAButton href={getResumeUrl()} variant="secondary" icon={<DownloadIcon />}>
                   Download Resume
                 </CTAButton>
               </div>
