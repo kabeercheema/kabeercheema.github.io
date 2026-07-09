@@ -1,0 +1,12 @@
+export { SunIcon } from "./SunIcon";
+export { MoonIcon } from "./MoonIcon";
+export { MenuIcon } from "./MenuIcon";
+export { XIcon } from "./XIcon";
+export { DownloadIcon } from "./DownloadIcon";
+export { MailIcon } from "./MailIcon";
+export { PhoneIcon } from "./PhoneIcon";
+export { LinkedInIcon } from "./LinkedInIcon";
+export { GitHubIcon } from "./GitHubIcon";
+export { ArrowRightIcon } from "./ArrowRightIcon";
+export { ArrowLeftIcon } from "./ArrowLeftIcon";
+export { ArrowUpRightIcon } from "./ArrowUpRightIcon";
