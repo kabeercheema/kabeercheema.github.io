@@ -7,8 +7,6 @@ import { SkillsSection } from "../components/sections/SkillsSection";
 import { EducationSection } from "../components/sections/EducationSection";
 import { ContactSection } from "../components/sections/ContactSection";
 
-const CONTAINER = "mx-auto max-w-6xl px-5 sm:px-8";
-
 export function HomePage() {
   const location = useLocation();
 
@@ -24,7 +22,7 @@ export function HomePage() {
   return (
     <>
       <Hero />
-      <main className={`${CONTAINER} pb-24`}>
+      <main className="container site-main">
         <ProjectsSection />
         <ExperienceSection />
         <SkillsSection />
