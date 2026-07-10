@@ -5,7 +5,7 @@ import { ExperienceItem } from "../ExperienceItem";
 
 export function ExperienceSection() {
   return (
-    <section id="experience" className="scroll-mt-20 border-t border-slate-200/80 py-16 dark:border-slate-800/80 md:py-20">
+    <section id="experience" className="section">
       <Reveal>
         <SectionHeader
           number="02"
@@ -15,7 +15,7 @@ export function ExperienceSection() {
         />
       </Reveal>
 
-      <div className="mt-8 grid gap-5 md:grid-cols-2">
+      <div className="experience-grid">
         {EXPERIENCE.map((exp, i) => (
           <Reveal key={`${exp.company}-${exp.role}`} delay={i * 90}>
             <ExperienceItem experience={exp} />
